@@ -154,17 +154,6 @@ curl -X POST http://localhost:3001/api/query \
 
 ---
 
-## Future Improvements
-
-- [ ] Implement proper vector database (ChromaDB, Pinecone)
-- [ ] Add user authentication with JWT
-- [ ] Use better embeddings (sentence-transformers, OpenAI)
-- [ ] Implement semantic chunking
-- [ ] Add conversation history/memory
-- [ ] Deploy to cloud platform
-
----
-
 ## What I Learned
 
 - Designing and implementing a RAG pipeline from scratch
@@ -188,9 +177,3 @@ curl -X POST http://localhost:3001/api/query \
 ## Author
 
 **Uday Kiran Kalli**
-
----
-
-## License
-
-MIT License - feel free to use this project for learning purposes.
