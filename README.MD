@@ -1,167 +1,161 @@
-# AI Knowledge Box
+AI Knowledge Box
+A lightweight web application that lets you save notes and website links, then ask questions about your saved content using AI-powered search.
+I built this to learn how different parts of a web app work together - from the database to the frontend to basic AI concepts.
 
-AI Knowledge Box is a small web application that allows users to save notes or website links and ask questions based on the saved content.  
-The application uses a simple Retrieval-Augmented Generation (RAG) approach to find relevant information and generate answers.
+What it does
 
-This project was built to understand how frontend, backend, databases, and basic AI concepts work together in a real application.
+Save text notes
+Save website URLs (content gets fetched automatically)
+Ask questions about anything you've saved
+Get answers with references to where the info came from
+Everything runs on your computer, no cloud required
 
----
 
-## Features
+Built with
+Frontend
 
-- Add short text notes
-- Add website URLs (content is fetched on the backend)
-- Store content in a local database
-- Ask questions based on saved content
-- Retrieve relevant information using semantic similarity
-- Generate answers with source references
-- Works completely on local system
+React
+Vite
+JavaScript
+CSS
 
----
+Backend
 
-## Tech Stack
+Node.js
+Express
+SQLite
 
-### Frontend
-- React
-- Vite
-- JavaScript
-- CSS
+AI stuff
 
-### Backend
-- Node.js
-- Express
-- SQLite database
+TF-IDF based embeddings (runs locally)
+Cosine similarity for finding relevant content
+Optional OpenAI integration if you want better answers
 
-### AI / Logic
-- Local embedding generation (TF-IDF based)
-- Cosine similarity for semantic search
-- Optional OpenAI integration for better answers
 
----
+How it works
 
-## Project Structure
+You add a note or URL through the web interface
+Backend saves it to the database
+Content gets split into smaller chunks
+Each chunk gets converted into an embedding (basically a numerical representation)
+When you ask a question:
 
+Your question gets embedded too
+System finds the most similar chunks
+Generates an answer using those relevant pieces
+
+
+You get the answer plus snippets showing where it came from
+
+
+Project structure
 ai-knowledge-box/
 │
 ├── backend/
-│ ├── src/
-│ │ ├── server.js
-│ │ ├── rag.js
-│ │ ├── db.js
-│ │ ├── embedding.js
-│ │ ├── chunking.js
-│ │ └── logger.js
-│ └── knowledge.db
+│   ├── src/
+│   │   ├── server.js          # Main server file
+│   │   ├── rag.js              # RAG logic
+│   │   ├── db.js               # Database operations
+│   │   ├── embedding.js        # Embedding generation
+│   │   ├── chunking.js         # Text chunking
+│   │   └── logger.js           # Logging utility
+│   └── knowledge.db            # SQLite database
 │
 ├── frontend/
-│ ├── src/
-│ └── vite.config.js
+│   ├── src/
+│   └── vite.config.js
 │
 └── README.md
 
+Running it locally
+What you need:
 
----
+Node.js (version 18 or newer)
+npm
 
-## How the App Works
-
-1. User adds a note or a URL from the frontend
-2. Backend stores the content in the database
-3. Content is split into smaller chunks
-4. Embeddings are generated for each chunk
-5. When a question is asked:
-   - The question is embedded
-   - Similar chunks are retrieved
-   - An answer is generated using the relevant content
-6. The answer and source snippets are shown to the user
-
----
-
-## Setup Instructions (Run Locally)
-
-### Prerequisites
-- Node.js installed (v18 or above)
-- npm installed
-
----
-
-### Backend Setup
-
-```bash
-cd backend
+Setting up the backend:
+bashcd backend
 npm install
 npm run start
-Backend will run on:
+```
 
-http://localhost:3001
-Optional .env file:
+Backend runs at `http://localhost:3001`
 
+**Optional - create a `.env` file in the backend folder:**
+```
 PORT=3001
 OPENAI_API_KEY=your_api_key_here
 NODE_ENV=development
-Frontend Setup
-Open a new terminal:
-
-cd frontend
+Setting up the frontend:
+Open a new terminal window:
+bashcd frontend
 npm install
 npm run dev
-Frontend will run on:
+```
 
-http://localhost:5173
-API Endpoints
-Add Content
+Frontend runs at `http://localhost:5173`
+
+---
+
+## API endpoints
+
+**Add content**
+```
 POST /api/ingest
+
 {
   "type": "note",
   "content": "React is a JavaScript library"
 }
-Ask Question
+```
+
+**Ask a question**
+```
 POST /api/query
+
 {
   "question": "What is React?"
 }
-Get All Saved Items
+```
+
+**Get all saved items**
+```
 GET /api/items
-Design Decisions
-SQLite was used because it is lightweight and easy to manage
 
-Local embeddings were used to avoid API dependency
+Why I made certain choices
 
-Simple chunking strategy was chosen to keep logic understandable
+SQLite - Easy to set up, no separate database server needed
+Local embeddings - Works without internet or API keys
+Simple chunking - Keeps the logic easy to understand
+Single user - Simplified the whole system
 
-Single-user system was implemented to reduce complexity
 
-Limitations
-No user authentication
+Current limitations
 
-Local embeddings give basic results
+No user accounts or authentication
+Local embeddings aren't as good as commercial alternatives
+UI is pretty basic (focused on learning, not design)
+Not built for handling massive amounts of data
 
-UI is simple and focused on functionality
 
-Not optimized for large datasets
+What I might add later
 
-Future Improvements
-Add user login
+User login system
+Better AI responses using OpenAI or similar
+Nicer looking interface
+Pagination and filtering for saved items
+Deploy it so others can use it online
 
-Use OpenAI or other LLMs for better answers
 
-Improve UI design
+What I learned
+This project taught me:
 
-Add pagination and search filters
+How frontend and backend talk to each other
+Designing REST APIs from scratch
+How RAG (Retrieval-Augmented Generation) actually works
+Working with SQLite in Node.js
+Organizing a full-stack project properly
 
-Deploy the app online
-
-Learning Outcome
-Through this project, I learned:
-
-How frontend and backend communicate
-
-How to design REST APIs
-
-How RAG pipelines work
-
-How to use SQLite in Node.js
-
-How to structure a full-stack project
 
 Author
-Built by Uday Kiran Kalli.
+Built by Uday Kiran Kalli
